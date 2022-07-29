@@ -11,6 +11,6 @@
     "resolveJsonModule": true,
     "types": ["node"]
   },
-  "include": ["src", "tests", "scripts"],
+  "include": ["src", "tests"],
   "exclude": ["tests/fixtures"]
 }

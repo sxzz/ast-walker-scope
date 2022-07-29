@@ -1,5 +1,5 @@
 import { parse } from '@babel/parser'
-import { walk } from 'estree-walker'
+import { walk as estreeWalk } from 'estree-walker'
 import {
   extractIdentifiers,
   isFunctionType,
@@ -26,7 +26,7 @@ const ADVANCED_SCOPE: Node['type'][] = [
   'ForOfStatement',
 ]
 
-export const walkSource = (
+export const walk = (
   code: string,
   walkHooks: WalkerHooks,
   { filename, parserPlugins }: ParseOptions = {}
@@ -51,7 +51,7 @@ export const walkAST = (ast: Program, { enter, leave }: WalkerHooks) => {
   let currentScope: Scope = {}
   const scopeStack: Scope[] = [currentScope]
 
-  walk(ast, {
+  estreeWalk(ast, {
     enter(this: WalkerContext, node: Node, parent, ...args) {
       enterNode(node, parent)
       enter?.call(getHookContext(this, [parent, ...args]), node)
