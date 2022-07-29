@@ -1,0 +1,254 @@
+// Vitest Snapshot v1
+
+exports[`analyze > ./fixtures/basic.ts 1`] = `
+" 1 | const level = 'root'/* LEVEL: 1 
+   | > {
+   | > level: 1, 6
+   | } */
+ 2 | export const topVar = 'foo'/* LEVEL: 1 
+   | > {
+   | > level: 1, 6
+   | > topVar: 2, 13
+   | } */
+ 3 | 
+ 4 | class topClass {}/* LEVEL: 1 
+   | > {
+   | > level: 1, 6
+   | > topVar: 2, 13
+   | > topClass: 4, 6
+   | } */
+ 5 | 
+ 6 | function topFn() {}/* LEVEL: 1 
+   | > {
+   | > level: 1, 6
+   | > topVar: 2, 13
+   | > topClass: 4, 6
+   | > topFn: 6, 9
+   | } */
+ 7 | 
+ 8 | export const topFoo = () => {
+ 9 |   console.log(level)/* LEVEL: 2 
+   | > {
+   | > level: 1, 6
+   | > topVar: 2, 13
+   | > topClass: 4, 6
+   | > topFn: 6, 9
+   | } */
+10 | }/* LEVEL: 1 
+   | > {
+   | > level: 1, 6
+   | > topVar: 2, 13
+   | > topClass: 4, 6
+   | > topFn: 6, 9
+   | > topFoo: 8, 13
+   | } */
+11 | 
+12 | {
+13 |   const level = '2'/* LEVEL: 2 
+   | > {
+   | > level: 13, 8
+   | > topVar: 2, 13
+   | > topClass: 4, 6
+   | > topFn: 6, 9
+   | > topFoo: 8, 13
+   | } */
+14 |   class Level2Class {
+15 |     //
+16 |   }/* LEVEL: 2 
+   | > {
+   | > level: 13, 8
+   | > topVar: 2, 13
+   | > topClass: 4, 6
+   | > topFn: 6, 9
+   | > topFoo: 8, 13
+   | > Level2Class: 14, 8
+   | } */
+17 | 
+18 |   {
+19 |     const level = '3'/* LEVEL: 3 
+   | > {
+   | > level: 19, 10
+   | > topVar: 2, 13
+   | > topClass: 4, 6
+   | > topFn: 6, 9
+   | > topFoo: 8, 13
+   | > Level2Class: 14, 8
+   | } */
+20 |     function Level3Fn() {
+21 |       //
+22 |     }/* LEVEL: 3 
+   | > {
+   | > level: 19, 10
+   | > topVar: 2, 13
+   | > topClass: 4, 6
+   | > topFn: 6, 9
+   | > topFoo: 8, 13
+   | > Level2Class: 14, 8
+   | > Level3Fn: 20, 13
+   | } */
+23 |   }
+24 | 
+25 |   // Level 2
+26 | }
+27 | 
+28 | // Level 1
+29 | "
+`;
+
+exports[`analyze > ./fixtures/catch-params.ts 1`] = `
+" 1 | const level = 'root'/* LEVEL: 1 
+   | > {
+   | > level: 1, 6
+   | } */
+ 2 | try {
+ 3 |   const tryVar = '1'/* LEVEL: 2 
+   | > {
+   | > level: 1, 6
+   | > tryVar: 3, 8
+   | } */
+ 4 | } catch (err) {
+ 5 |   console.log(err)/* LEVEL: 2 
+   | > {
+   | > level: 1, 6
+   | > err: 4, 9
+   | } */
+ 6 | }
+ 7 | 
+ 8 | console.log(level)/* LEVEL: 1 
+   | > {
+   | > level: 1, 6
+   | } */
+ 9 | "
+`;
+
+exports[`analyze > ./fixtures/destructuring-var.ts 1`] = `
+" 1 | const {
+ 2 |   a,
+ 3 |   b,
+ 4 |   c: c1,
+ 5 |   d: { e },
+ 6 | } = {
+ 7 |   a: 'a',
+ 8 |   b: 'b',
+ 9 |   c: 'c',
+10 |   d: { e: 'e' },
+11 | }/* LEVEL: 1 
+   | > {
+   | > a: 2, 2
+   | > b: 3, 2
+   | > c1: 4, 5
+   | > e: 5, 7
+   | } */
+12 | 
+13 | const [a1, a2, , [a4]] = [1, 2, 3, [4]]/* LEVEL: 1 
+   | > {
+   | > a: 2, 2
+   | > b: 3, 2
+   | > c1: 4, 5
+   | > e: 5, 7
+   | > a1: 13, 7
+   | > a2: 13, 11
+   | > a4: 13, 18
+   | } */
+14 | "
+`;
+
+exports[`analyze > ./fixtures/fn-params.ts 1`] = `
+" 1 | let level = 'root'/* LEVEL: 1 
+   | > {
+   | > level: 1, 4
+   | } */
+ 2 | 
+ 3 | const foo = function (a, b) {
+ 4 |   console.log(a, b)/* LEVEL: 2 
+   | > {
+   | > level: 1, 4
+   | > a: 3, 22
+   | > b: 3, 25
+   | } */
+ 5 | }/* LEVEL: 1 
+   | > {
+   | > level: 1, 4
+   | > foo: 3, 6
+   | } */
+ 6 | "
+`;
+
+exports[`analyze > ./fixtures/loop.js 1`] = `
+" 1 | const level = 'root'/* LEVEL: 1 
+   | > {
+   | > level: 1, 6
+   | } */
+ 2 | 
+ 3 | for (const iterator/* LEVEL: 2 
+   | > {
+   | > level: 1, 6
+   | > iterator: 3, 11
+   | } */ of object) {
+ 4 |   console.log(iterator)/* LEVEL: 2 
+   | > {
+   | > level: 1, 6
+   | > iterator: 3, 11
+   | } */
+ 5 | }
+ 6 | 
+ 7 | for (const key/* LEVEL: 2 
+   | > {
+   | > level: 1, 6
+   | > key: 7, 11
+   | } */ in object) {
+ 8 |   console.log(key)/* LEVEL: 2 
+   | > {
+   | > level: 1, 6
+   | > key: 7, 11
+   | } */
+ 9 | }
+10 | 
+11 | for (let i = 0/* LEVEL: 1 
+   | > {
+   | > level: 1, 6
+   | > i: 11, 9
+   | } */; i < array.length; i++) {
+12 |   console.log(i)/* LEVEL: 2 
+   | > {
+   | > level: 1, 6
+   | > i: 11, 9
+   | } */
+13 | }
+14 | 
+15 | while (1) {
+16 |   console.log(level)/* LEVEL: 2 
+   | > {
+   | > level: 1, 6
+   | > i: 11, 9
+   | } */
+17 | }
+18 | 
+19 | do {
+20 |   console.log(level)/* LEVEL: 2 
+   | > {
+   | > level: 1, 6
+   | > i: 11, 9
+   | } */
+21 | } while (1)
+22 | ;[].forEach((item, idx) => {
+23 |   console.log(item, idx)/* LEVEL: 2 
+   | > {
+   | > level: 1, 6
+   | > i: 11, 9
+   | > item: 22, 13
+   | > idx: 22, 19
+   | } */
+24 | })/* LEVEL: 1 
+   | > {
+   | > level: 1, 6
+   | > i: 11, 9
+   | } */
+25 | 
+26 | console.log(level)/* LEVEL: 1 
+   | > {
+   | > level: 1, 6
+   | > i: 11, 9
+   | } */
+27 | "
+`;
