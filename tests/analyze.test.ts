@@ -5,9 +5,9 @@ import {
   isExportNamedDeclaration,
 } from '@babel/types'
 import MagicString from 'magic-string'
-import { analyze } from '../src'
+import { walk } from '../src'
 import type { Node } from '@babel/types'
-import type { HookContext, Scope, WalkHooks } from '../src'
+import type { HookContext, Scope, WalkerHooks } from '../src'
 
 function stringifyScope(scope: Scope) {
   return `{\n   | > ${Object.entries(scope)
@@ -48,7 +48,7 @@ describe('analyze', async () => {
       const s = new MagicString(content)
       prependLineNumber(content, s)
 
-      const hooks: WalkHooks = {
+      const hooks: WalkerHooks = {
         leave(node) {
           if (
             (isDeclaration(node) || isCallExpression(node)) &&
@@ -56,17 +56,9 @@ describe('analyze', async () => {
           ) {
             output(s, node, this)
           }
-
-          // if (node.type === 'BlockStatement' && !isFunctionType(this.parent))
-          //   output(s, node, this)
-          // else if (
-          //   isFunctionType(node) &&
-          //   this.parent.type !== 'VariableDeclarator'
-          // )
-          //   output(s, node, this)
         },
       }
-      analyze(content, hooks, { filename })
+      walk(content, hooks, { filename })
 
       expect(s.toString()).toMatchSnapshot()
     })

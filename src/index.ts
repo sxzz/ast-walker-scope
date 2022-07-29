@@ -20,6 +20,8 @@ import type {
 } from '@babel/types'
 import type { ParserPlugin } from '@babel/parser'
 
+export * from './types'
+
 const ADVANCED_SCOPE: Node['type'][] = [
   'CatchClause',
   'ForInStatement',
