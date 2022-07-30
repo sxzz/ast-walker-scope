@@ -61,7 +61,6 @@ export const walkAST = (ast: Program, { enter, leave }: WalkerHooks) => {
 
     leave(this: WalkerContext, node, parent, ...args) {
       leaveNode(node, parent)
-
       leave?.call(getHookContext(this, [parent, ...args]), node)
     },
   })
@@ -104,6 +103,17 @@ export const walkAST = (ast: Program, { enter, leave }: WalkerHooks) => {
       !ADVANCED_SCOPE.includes(parent.type)
     ) {
       scopeStack.push((currentScope = {}))
+    }
+
+    // handle hoist
+    if (node.type === 'BlockStatement' || node.type === 'Program') {
+      for (const stmt of node.body) {
+        if (stmt.type === 'VariableDeclaration' && stmt.kind === 'var') {
+          walkVariableDeclaration(stmt)
+        } else if (stmt.type === 'FunctionDeclaration' && stmt.id) {
+          registerBinding(stmt.id)
+        }
+      }
     }
   }
 

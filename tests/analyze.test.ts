@@ -11,6 +11,7 @@ import type { HookContext, Scope, WalkerHooks } from '../src'
 
 function stringifyScope(scope: Scope) {
   return `{\n   | > ${Object.entries(scope)
+    .sort(([a], [b]) => a.localeCompare(b))
     .map(
       ([key, node]) =>
         `${key}: ${

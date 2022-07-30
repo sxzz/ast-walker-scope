@@ -4,87 +4,91 @@ exports[`analyze > ./fixtures/basic.ts 1`] = `
 " 1 | const level = 'root'/* LEVEL: 1 
    | > {
    | > level: 1, 6
+   | > topFn: 6, 9
    | } */
  2 | export const topVar = 'foo'/* LEVEL: 1 
    | > {
    | > level: 1, 6
+   | > topFn: 6, 9
    | > topVar: 2, 13
    | } */
  3 | 
  4 | class topClass {}/* LEVEL: 1 
    | > {
    | > level: 1, 6
-   | > topVar: 2, 13
    | > topClass: 4, 6
+   | > topFn: 6, 9
+   | > topVar: 2, 13
    | } */
  5 | 
  6 | function topFn() {}/* LEVEL: 1 
    | > {
    | > level: 1, 6
-   | > topVar: 2, 13
    | > topClass: 4, 6
    | > topFn: 6, 9
+   | > topVar: 2, 13
    | } */
  7 | 
  8 | export const topFoo = () => {
  9 |   console.log(level)/* LEVEL: 2 
    | > {
    | > level: 1, 6
-   | > topVar: 2, 13
    | > topClass: 4, 6
    | > topFn: 6, 9
+   | > topVar: 2, 13
    | } */
 10 | }/* LEVEL: 1 
    | > {
    | > level: 1, 6
-   | > topVar: 2, 13
    | > topClass: 4, 6
    | > topFn: 6, 9
    | > topFoo: 8, 13
+   | > topVar: 2, 13
    | } */
 11 | 
 12 | {
 13 |   const level = '2'/* LEVEL: 2 
    | > {
    | > level: 13, 8
-   | > topVar: 2, 13
    | > topClass: 4, 6
    | > topFn: 6, 9
    | > topFoo: 8, 13
+   | > topVar: 2, 13
    | } */
 14 |   class Level2Class {
 15 |     //
 16 |   }/* LEVEL: 2 
    | > {
    | > level: 13, 8
-   | > topVar: 2, 13
+   | > Level2Class: 14, 8
    | > topClass: 4, 6
    | > topFn: 6, 9
    | > topFoo: 8, 13
-   | > Level2Class: 14, 8
+   | > topVar: 2, 13
    | } */
 17 | 
 18 |   {
 19 |     const level = '3'/* LEVEL: 3 
    | > {
    | > level: 19, 10
-   | > topVar: 2, 13
+   | > Level2Class: 14, 8
+   | > Level3Fn: 20, 13
    | > topClass: 4, 6
    | > topFn: 6, 9
    | > topFoo: 8, 13
-   | > Level2Class: 14, 8
+   | > topVar: 2, 13
    | } */
 20 |     function Level3Fn() {
 21 |       //
 22 |     }/* LEVEL: 3 
    | > {
    | > level: 19, 10
-   | > topVar: 2, 13
+   | > Level2Class: 14, 8
+   | > Level3Fn: 20, 13
    | > topClass: 4, 6
    | > topFn: 6, 9
    | > topFoo: 8, 13
-   | > Level2Class: 14, 8
-   | > Level3Fn: 20, 13
+   | > topVar: 2, 13
    | } */
 23 |   }
 24 | 
@@ -109,8 +113,8 @@ exports[`analyze > ./fixtures/catch-params.ts 1`] = `
  4 | } catch (err) {
  5 |   console.log(err)/* LEVEL: 2 
    | > {
-   | > level: 1, 6
    | > err: 4, 9
+   | > level: 1, 6
    | } */
  6 | }
  7 | 
@@ -143,12 +147,12 @@ exports[`analyze > ./fixtures/destructuring-var.ts 1`] = `
 13 | const [a1, a2, , [a4]] = [1, 2, 3, [4]]/* LEVEL: 1 
    | > {
    | > a: 2, 2
-   | > b: 3, 2
-   | > c1: 4, 5
-   | > e: 5, 7
    | > a1: 13, 7
    | > a2: 13, 11
    | > a4: 13, 18
+   | > b: 3, 2
+   | > c1: 4, 5
+   | > e: 5, 7
    | } */
 14 | "
 `;
@@ -162,14 +166,14 @@ exports[`analyze > ./fixtures/fn-params.ts 1`] = `
  3 | const foo = function (a, b) {
  4 |   console.log(a, b)/* LEVEL: 2 
    | > {
-   | > level: 1, 4
    | > a: 3, 22
    | > b: 3, 25
+   | > level: 1, 4
    | } */
  5 | }/* LEVEL: 1 
    | > {
-   | > level: 1, 4
    | > foo: 3, 6
+   | > level: 1, 4
    | } */
  6 | "
 `;
@@ -182,73 +186,93 @@ exports[`analyze > ./fixtures/loop.js 1`] = `
  2 | 
  3 | for (const iterator/* LEVEL: 2 
    | > {
-   | > level: 1, 6
    | > iterator: 3, 11
+   | > level: 1, 6
    | } */ of object) {
  4 |   console.log(iterator)/* LEVEL: 2 
    | > {
-   | > level: 1, 6
    | > iterator: 3, 11
+   | > level: 1, 6
    | } */
  5 | }
  6 | 
  7 | for (const key/* LEVEL: 2 
    | > {
-   | > level: 1, 6
    | > key: 7, 11
+   | > level: 1, 6
    | } */ in object) {
  8 |   console.log(key)/* LEVEL: 2 
    | > {
-   | > level: 1, 6
    | > key: 7, 11
+   | > level: 1, 6
    | } */
  9 | }
 10 | 
 11 | for (let i = 0/* LEVEL: 1 
    | > {
-   | > level: 1, 6
    | > i: 11, 9
+   | > level: 1, 6
    | } */; i < array.length; i++) {
 12 |   console.log(i)/* LEVEL: 2 
    | > {
-   | > level: 1, 6
    | > i: 11, 9
+   | > level: 1, 6
    | } */
 13 | }
 14 | 
 15 | while (1) {
 16 |   console.log(level)/* LEVEL: 2 
    | > {
-   | > level: 1, 6
    | > i: 11, 9
+   | > level: 1, 6
    | } */
 17 | }
 18 | 
 19 | do {
 20 |   console.log(level)/* LEVEL: 2 
    | > {
-   | > level: 1, 6
    | > i: 11, 9
+   | > level: 1, 6
    | } */
 21 | } while (1)
 22 | ;[].forEach((item, idx) => {
 23 |   console.log(item, idx)/* LEVEL: 2 
    | > {
-   | > level: 1, 6
    | > i: 11, 9
-   | > item: 22, 13
    | > idx: 22, 19
+   | > item: 22, 13
+   | > level: 1, 6
    | } */
 24 | })/* LEVEL: 1 
    | > {
-   | > level: 1, 6
    | > i: 11, 9
+   | > level: 1, 6
    | } */
 25 | 
 26 | console.log(level)/* LEVEL: 1 
    | > {
-   | > level: 1, 6
    | > i: 11, 9
+   | > level: 1, 6
    | } */
 27 | "
+`;
+
+exports[`analyze > ./fixtures/var-hoist.ts 1`] = `
+" 1 | console.log(foo)/* LEVEL: 1 
+   | > {
+   | > foo: 3, 9
+   | > v: 4, 4
+   | } */
+ 2 | 
+ 3 | function foo() {}/* LEVEL: 1 
+   | > {
+   | > foo: 3, 9
+   | > v: 4, 4
+   | } */
+ 4 | var v = '123'/* LEVEL: 1 
+   | > {
+   | > foo: 3, 9
+   | > v: 4, 4
+   | } */
+ 5 | "
 `;
