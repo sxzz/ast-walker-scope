@@ -22,11 +22,15 @@ import type { ParserPlugin } from '@babel/parser'
 
 export * from './types'
 
-const ADVANCED_SCOPE: Node['type'][] = [
+const NEW_SCOPE: Node['type'][] = [
   'CatchClause',
   'ForInStatement',
   'ForOfStatement',
 ]
+
+function isNewScope(node: Node) {
+  return NEW_SCOPE.includes(node.type) || isFunctionType(node)
+}
 
 export const walk = (
   code: string,
@@ -83,27 +87,21 @@ export const walkAST = (ast: Program, { enter, leave }: WalkerHooks) => {
   }
 
   function enterNode(node: Node, parent: Node) {
+    if (
+      isNewScope(node) ||
+      (node.type === 'BlockStatement' && !isNewScope(parent))
+    )
+      scopeStack.push((currentScope = {}))
+
     if (isFunctionType(node)) {
-      scopeStack.push((currentScope = {}))
       walkFunctionParams(node, registerBinding)
-    } else if (node.type === 'CatchClause') {
+    } else if (
       // catch param
-      scopeStack.push((currentScope = {}))
-      if (node.param && node.param.type === 'Identifier')
-        registerBinding(node.param)
-      return
-    } else if (
-      node.type === 'ForOfStatement' ||
-      node.type === 'ForInStatement'
-    ) {
-      scopeStack.push((currentScope = {}))
-    } else if (
-      node.type === 'BlockStatement' &&
-      !isFunctionType(parent) &&
-      !ADVANCED_SCOPE.includes(parent.type)
-    ) {
-      scopeStack.push((currentScope = {}))
-    }
+      node.type === 'CatchClause' &&
+      node.param &&
+      node.param.type === 'Identifier'
+    )
+      registerBinding(node.param)
 
     // handle hoist
     if (node.type === 'BlockStatement' || node.type === 'Program') {
