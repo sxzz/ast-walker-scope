@@ -46,7 +46,7 @@ export const walk = (
 
   walkAST(ast.program, walkHooks)
 
-  return { ast }
+  return ast
 }
 
 export const walkAST = (ast: Program, { enter, leave }: WalkerHooks) => {
