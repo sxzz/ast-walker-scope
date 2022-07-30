@@ -1,8 +1,14 @@
+import { isFunction } from '@babel/types'
 import type { Function, Identifier, Node } from '@babel/types'
 
-export const isFunctionType = (node: Node): node is Function => {
-  return /Function(?:Expression|Declaration)$|Method$/.test(node.type)
-}
+const NEW_SCOPE: Node['type'][] = [
+  'CatchClause',
+  'ForInStatement',
+  'ForOfStatement',
+]
+
+export const isNewScope = (node: Node) =>
+  NEW_SCOPE.includes(node.type) || isFunction(node)
 
 export function walkFunctionParams(
   node: Function,

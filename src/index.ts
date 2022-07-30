@@ -1,10 +1,17 @@
 import { parse } from '@babel/parser'
 import { walk as estreeWalk } from 'estree-walker'
+import { isFunction } from '@babel/types'
 import {
   extractIdentifiers,
-  isFunctionType,
+  isNewScope,
   walkFunctionParams,
 } from './utils/babel'
+import type {
+  Identifier,
+  Node,
+  Program,
+  VariableDeclaration,
+} from '@babel/types'
 import type {
   HookContext,
   ParseOptions,
@@ -12,25 +19,9 @@ import type {
   WalkerContext,
   WalkerHooks,
 } from './types'
-import type {
-  Identifier,
-  Node,
-  Program,
-  VariableDeclaration,
-} from '@babel/types'
 import type { ParserPlugin } from '@babel/parser'
 
 export * from './types'
-
-const NEW_SCOPE: Node['type'][] = [
-  'CatchClause',
-  'ForInStatement',
-  'ForOfStatement',
-]
-
-function isNewScope(node: Node) {
-  return NEW_SCOPE.includes(node.type) || isFunctionType(node)
-}
 
 export const walk = (
   code: string,
@@ -93,7 +84,7 @@ export const walkAST = (ast: Program, { enter, leave }: WalkerHooks) => {
     )
       scopeStack.push((currentScope = {}))
 
-    if (isFunctionType(node)) {
+    if (isFunction(node)) {
       walkFunctionParams(node, registerBinding)
     } else if (
       // catch param
