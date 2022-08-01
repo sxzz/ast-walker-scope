@@ -22,6 +22,7 @@ import type {
 import type { ParserPlugin } from '@babel/parser'
 
 export * from './types'
+export * from './utils/babel'
 
 export const walk = (
   code: string,
