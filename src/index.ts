@@ -6,12 +6,7 @@ import {
   isNewScope,
   walkFunctionParams,
 } from './utils/babel'
-import type {
-  Identifier,
-  Node,
-  Program,
-  VariableDeclaration,
-} from '@babel/types'
+import type { Identifier, Node, VariableDeclaration } from '@babel/types'
 import type {
   HookContext,
   ParseOptions,
@@ -45,11 +40,11 @@ export const walk = (
   return ast
 }
 
-export const walkAST = (ast: Program, { enter, leave }: WalkerHooks) => {
+export const walkAST = (node: Node, { enter, leave }: WalkerHooks) => {
   let currentScope: Scope = {}
   const scopeStack: Scope[] = [currentScope]
 
-  estreeWalk(ast, {
+  estreeWalk(node, {
     enter(this: WalkerContext, node: Node, parent, ...args) {
       enterNode(node, parent)
       enter?.call(getHookContext(this, [parent, ...args]), node)
