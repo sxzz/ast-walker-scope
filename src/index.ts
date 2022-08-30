@@ -102,9 +102,11 @@ export const walkAST = (node: Node, { enter, leave }: WalkerHooks) => {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  function leaveNode(node: Node, _parent: Node) {
-    if (node.type === 'BlockStatement') {
+  function leaveNode(node: Node, parent: Node) {
+    if (
+      isNewScope(node) ||
+      (node.type === 'BlockStatement' && !isNewScope(parent))
+    ) {
       scopeStack.pop()
       currentScope = scopeStack[scopeStack.length - 1]
     } else if (
