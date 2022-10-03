@@ -38,7 +38,7 @@ function output(s: MagicString, node: Node, ctx: HookContext) {
   )
 }
 
-describe('analyze', async () => {
+describe('analyze', () => {
   const fixtures = import.meta.glob('./fixtures/*.{ts,js}', {
     eager: true,
     as: 'raw',
