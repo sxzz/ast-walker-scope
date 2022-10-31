@@ -8,9 +8,9 @@ import {
 } from './utils/babel'
 import type { Identifier, Node, VariableDeclaration } from '@babel/types'
 import type {
-  HookContext,
   ParseOptions,
   Scope,
+  ScopeContext,
   WalkerContext,
   WalkerHooks,
 } from './types'
@@ -40,7 +40,10 @@ export const walk = (
   return ast
 }
 
-export const walkAST = (node: Node | Node[], { enter, leave }: WalkerHooks) => {
+export const walkAST = (
+  node: Node | Node[],
+  { enter, leave, enterAfter, leaveAfter }: WalkerHooks
+) => {
   let currentScope: Scope = {}
   const scopeStack: Scope[] = [currentScope]
 
@@ -49,41 +52,75 @@ export const walkAST = (node: Node | Node[], { enter, leave }: WalkerHooks) => {
     : node
   estreeWalk(ast, {
     enter(this: WalkerContext, node: Node, parent, ...args) {
-      const { ctx, isSkip } = getHookContext(this, [parent, ...args])
-      enter?.call(ctx, node)
-      if (!isSkip()) enterNode(node, parent)
+      const { scopeCtx, walkerCtx, isSkip, isRemoved, getNode } =
+        getHookContext(this, node, [parent, ...args])
+
+      enter?.call({ ...scopeCtx(), ...walkerCtx }, node)
+      node = getNode()
+
+      if (!isSkip() && !isRemoved()) {
+        enterNode(node, parent)
+        enterAfter?.call(scopeCtx(), node)
+      }
     },
 
     leave(this: WalkerContext, node, parent, ...args) {
-      const { ctx, isSkip } = getHookContext(this, [parent, ...args])
-      leave?.call(ctx, node)
-      if (!isSkip()) leaveNode(node, parent)
+      const { scopeCtx, walkerCtx, isSkip, isRemoved, getNode } =
+        getHookContext(this, node, [parent, ...args])
+
+      leave?.call({ ...scopeCtx(), ...walkerCtx }, node)
+      node = getNode()
+
+      if (!isSkip() && !isRemoved()) {
+        leaveNode(node, parent)
+        leaveAfter?.call(scopeCtx(), node)
+      }
     },
   })
 
   function getHookContext(
     ctx: WalkerContext,
+    node: Node,
     [parent, key, index]: [Node, string, number]
-  ): { ctx: HookContext; isSkip: () => boolean } {
-    let isSkip = false
-    const scope = scopeStack.reduce((prev, curr) => ({ ...prev, ...curr }), {})
-    const newCtx = {
-      ...ctx,
+  ): {
+    scopeCtx: () => ScopeContext
+    walkerCtx: WalkerContext
+    isSkip: () => boolean
+    isRemoved: () => boolean
+    getNode: () => Node
+  } {
+    const scopeCtx: () => ScopeContext = () => ({
       parent,
       key,
       index,
+
+      scope: scopeStack.reduce((prev, curr) => ({ ...prev, ...curr }), {}),
+      scopes: scopeStack,
+      level: scopeStack.length,
+    })
+
+    let isSkip = false
+    let isRemoved = false
+    let newNode: Node = node
+    const walkerCtx: WalkerContext = {
       skip() {
         isSkip = true
         ctx.skip()
       },
-
-      scope,
-      scopes: scopeStack,
-      level: scopeStack.length,
+      replace(node) {
+        newNode = node
+      },
+      remove() {
+        isRemoved = true
+      },
     }
+
     return {
-      ctx: newCtx,
+      scopeCtx,
+      walkerCtx,
       isSkip: () => isSkip,
+      isRemoved: () => isRemoved,
+      getNode: () => newNode,
     }
   }
 

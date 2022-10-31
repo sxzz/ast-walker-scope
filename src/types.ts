@@ -14,7 +14,7 @@ export interface WalkerContext {
   replace: (node: Node) => void
 }
 
-export interface HookContext extends WalkerContext {
+export interface ScopeContext {
   parent: Node
   key: string
   index: number
@@ -25,6 +25,8 @@ export interface HookContext extends WalkerContext {
 }
 
 export interface WalkerHooks {
-  enter?: (this: HookContext, node: Node) => void
-  leave?: (this: HookContext, node: Node) => void
+  enter?: (this: WalkerContext & ScopeContext, node: Node) => void
+  enterAfter?: (this: ScopeContext, node: Node) => void
+  leave?: (this: WalkerContext & ScopeContext, node: Node) => void
+  leaveAfter?: (this: ScopeContext, node: Node) => void
 }

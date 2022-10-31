@@ -7,7 +7,7 @@ import {
 import MagicString from 'magic-string'
 import { walk } from '../src'
 import type { Node } from '@babel/types'
-import type { HookContext, Scope, WalkerHooks } from '../src'
+import type { Scope, ScopeContext, WalkerHooks } from '../src'
 
 function stringifyScope(scope: Scope) {
   return `{\n   | > ${Object.entries(scope)
@@ -31,7 +31,7 @@ function prependLineNumber(code: string, s: MagicString) {
   }
 }
 
-function output(s: MagicString, node: Node, ctx: HookContext) {
+function output(s: MagicString, node: Node, ctx: ScopeContext) {
   s.appendLeft(
     node.end!,
     `/* LEVEL: ${ctx.scopes.length} \n   | > ${stringifyScope(ctx.scope)} */`
@@ -50,7 +50,7 @@ describe('analyze', () => {
       prependLineNumber(content, s)
 
       const hooks: WalkerHooks = {
-        leave(node) {
+        leaveAfter(node) {
           if (
             (isDeclaration(node) || isCallExpression(node)) &&
             !isExportNamedDeclaration(node)
