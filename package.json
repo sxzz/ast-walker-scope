@@ -1,6 +1,6 @@
 {
   "name": "ast-walker-scope",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "packageManager": "pnpm@7.14.1",
   "description": "Traverse Babel AST with scope information.",
   "license": "MIT",
