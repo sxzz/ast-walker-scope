@@ -1,12 +1,13 @@
-import { parse } from '@babel/parser'
 import { walk as estreeWalk } from 'estree-walker'
 import { isFunction } from '@babel/types'
 import {
-  extractIdentifiers,
+  babelParse,
   isNewScope,
   walkFunctionParams,
+  walkNewIdentifier,
+  walkVariableDeclaration,
 } from './utils/babel'
-import type { Identifier, Node, VariableDeclaration } from '@babel/types'
+import type { Identifier, Node } from '@babel/types'
 import type {
   ParseOptions,
   Scope,
@@ -14,7 +15,6 @@ import type {
   WalkerContext,
   WalkerHooks,
 } from './types'
-import type { ParserPlugin } from '@babel/parser'
 
 export * from './types'
 export * from './utils/babel'
@@ -24,17 +24,7 @@ export const walk = (
   walkHooks: WalkerHooks,
   { filename, parserPlugins }: ParseOptions = {}
 ) => {
-  const plugins: ParserPlugin[] = parserPlugins || []
-  if (filename) {
-    if (/\.tsx?$/.test(filename)) plugins.push('typescript')
-    if (filename.endsWith('x')) plugins.push('jsx')
-  }
-
-  const ast = parse(code, {
-    sourceType: 'module',
-    plugins,
-  })
-
+  const ast = babelParse(code, filename, parserPlugins)
   walkAST(ast.program, walkHooks)
 
   return ast
@@ -145,7 +135,7 @@ export const walkAST = (
     if (node.type === 'BlockStatement' || node.type === 'Program') {
       for (const stmt of node.body) {
         if (stmt.type === 'VariableDeclaration' && stmt.kind === 'var') {
-          walkVariableDeclaration(stmt)
+          walkVariableDeclaration(stmt, registerBinding)
         } else if (stmt.type === 'FunctionDeclaration' && stmt.id) {
           registerBinding(stmt.id)
         }
@@ -160,31 +150,8 @@ export const walkAST = (
     ) {
       scopeStack.pop()
       currentScope = scopeStack[scopeStack.length - 1]
-    } else if (
-      node.type === 'FunctionDeclaration' ||
-      node.type === 'ClassDeclaration'
-    ) {
-      if (node.declare || !node.id) return
-      registerBinding(node.id)
-    } else if (node.type === 'VariableDeclaration') {
-      walkVariableDeclaration(node)
-    } else if (
-      node.type === 'ExportNamedDeclaration' &&
-      node.declaration &&
-      node.declaration.type === 'VariableDeclaration'
-    ) {
-      walkVariableDeclaration(node.declaration)
     }
-  }
-
-  function walkVariableDeclaration(stmt: VariableDeclaration) {
-    if (stmt.declare) return
-
-    for (const decl of stmt.declarations) {
-      for (const id of extractIdentifiers(decl.id)) {
-        registerBinding(id)
-      }
-    }
+    walkNewIdentifier(node, registerBinding)
   }
 
   function registerBinding(id: Identifier) {
@@ -203,4 +170,14 @@ export const walkAST = (
     ;(e as any).node = node
     throw e
   }
+}
+
+export const getRootScope = (nodes: Node[]): Scope => {
+  const scope: Scope = {}
+  for (const node of nodes) {
+    walkNewIdentifier(node, (id) => {
+      scope[id.name] = id
+    })
+  }
+  return scope
 }

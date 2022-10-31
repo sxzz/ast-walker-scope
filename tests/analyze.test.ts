@@ -5,38 +5,9 @@ import {
   isExportNamedDeclaration,
 } from '@babel/types'
 import MagicString from 'magic-string'
-import { walk } from '../src'
-import type { Node } from '@babel/types'
-import type { Scope, ScopeContext, WalkerHooks } from '../src'
-
-function stringifyScope(scope: Scope) {
-  return `{\n   | > ${Object.entries(scope)
-    .sort(([a], [b]) => a.localeCompare(b))
-    .map(
-      ([key, node]) =>
-        `${key}: ${
-          node?.loc?.start
-            ? `${node?.loc?.start.line}, ${node?.loc?.start.column}`
-            : undefined
-        }`
-    )
-    .join('\n   | > ')}\n   | }`
-}
-
-function prependLineNumber(code: string, s: MagicString) {
-  let idx = 0
-  for (const [lineNumber, line] of code.split('\n').entries()) {
-    s.prependLeft(idx, `${String(lineNumber + 1).padStart(2)} | `)
-    idx += line.length + 1
-  }
-}
-
-function output(s: MagicString, node: Node, ctx: ScopeContext) {
-  s.appendLeft(
-    node.end!,
-    `/* LEVEL: ${ctx.scopes.length} \n   | > ${stringifyScope(ctx.scope)} */`
-  )
-}
+import { babelParse, getRootScope, walk } from '../src'
+import { output, prependLineNumber } from './utils'
+import type { WalkerHooks } from '../src'
 
 describe('analyze', () => {
   const fixtures = import.meta.glob('./fixtures/*.{ts,js}', {
@@ -64,4 +35,25 @@ describe('analyze', () => {
       expect(s.toString()).toMatchSnapshot()
     })
   }
+})
+
+test('getRootScope', () => {
+  const { program } = babelParse(`
+    const a = 1
+    const b = 2
+    {
+      const c = 3
+    }
+    function foo() { }
+    class Clz { }
+  `)
+  const scope = getRootScope(program.body)
+  expect(Object.keys(scope)).toMatchInlineSnapshot(`
+    [
+      "a",
+      "b",
+      "foo",
+      "Clz",
+    ]
+  `)
 })

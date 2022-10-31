@@ -1,5 +1,12 @@
 import { isFunction } from '@babel/types'
-import type { Function, Identifier, Node } from '@babel/types'
+import { parse } from '@babel/parser'
+import type { ParserPlugin } from '@babel/parser'
+import type {
+  Function,
+  Identifier,
+  Node,
+  VariableDeclaration,
+} from '@babel/types'
 
 const NEW_SCOPE: Node['type'][] = [
   'CatchClause',
@@ -65,4 +72,60 @@ export function extractIdentifiers(
   }
 
   return nodes
+}
+
+export function babelParse(
+  code: string,
+  filename?: string,
+  parserPlugins: ParserPlugin[] = []
+) {
+  const plugins: ParserPlugin[] = parserPlugins || []
+  if (filename) {
+    if (/\.tsx?$/.test(filename)) plugins.push('typescript')
+    if (filename.endsWith('x')) plugins.push('jsx')
+  }
+
+  const ast = parse(code, {
+    sourceType: 'module',
+    plugins,
+  })
+  return ast
+}
+
+export function walkVariableDeclaration(
+  stmt: VariableDeclaration,
+  register: (id: Identifier) => void
+) {
+  if (stmt.declare) return
+
+  for (const decl of stmt.declarations) {
+    for (const id of extractIdentifiers(decl.id)) {
+      register(id)
+    }
+  }
+}
+
+export function walkNewIdentifier(
+  node: Node,
+  register: (id: Identifier) => void
+) {
+  if (node.type === 'ExportNamedDeclaration' && node.declaration) {
+    node = node.declaration
+  }
+
+  if (node.type === 'VariableDeclaration') {
+    walkVariableDeclaration(node, register)
+  } else if (
+    node.type === 'FunctionDeclaration' ||
+    node.type === 'ClassDeclaration'
+  ) {
+    if (node.declare || !node.id) return
+    register(node.id)
+  } else if (
+    node.type === 'ExportNamedDeclaration' &&
+    node.declaration &&
+    node.declaration.type === 'VariableDeclaration'
+  ) {
+    walkVariableDeclaration(node.declaration, register)
+  }
 }
