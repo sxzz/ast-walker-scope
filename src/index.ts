@@ -49,30 +49,41 @@ export const walkAST = (node: Node | Node[], { enter, leave }: WalkerHooks) => {
     : node
   estreeWalk(ast, {
     enter(this: WalkerContext, node: Node, parent, ...args) {
-      enterNode(node, parent)
-      enter?.call(getHookContext(this, [parent, ...args]), node)
+      const { ctx, isSkip } = getHookContext(this, [parent, ...args])
+      enter?.call(ctx, node)
+      if (!isSkip()) enterNode(node, parent)
     },
 
     leave(this: WalkerContext, node, parent, ...args) {
-      leaveNode(node, parent)
-      leave?.call(getHookContext(this, [parent, ...args]), node)
+      const { ctx, isSkip } = getHookContext(this, [parent, ...args])
+      leave?.call(ctx, node)
+      if (!isSkip()) leaveNode(node, parent)
     },
   })
 
   function getHookContext(
     ctx: WalkerContext,
     [parent, key, index]: [Node, string, number]
-  ): HookContext {
+  ): { ctx: HookContext; isSkip: () => boolean } {
+    let isSkip = false
     const scope = scopeStack.reduce((prev, curr) => ({ ...prev, ...curr }), {})
-    return {
+    const newCtx = {
       ...ctx,
       parent,
       key,
       index,
+      skip() {
+        isSkip = true
+        ctx.skip()
+      },
 
       scope,
       scopes: scopeStack,
       level: scopeStack.length,
+    }
+    return {
+      ctx: newCtx,
+      isSkip: () => isSkip,
     }
   }
 
