@@ -40,8 +40,13 @@ export const walkAST = (
   const ast: Node = Array.isArray(node)
     ? ({ type: 'Program', body: node } as any)
     : node
-  estreeWalk(ast, {
-    enter(this: WalkerContext, node: Node, parent, ...args) {
+  ;(estreeWalk as any)(ast, {
+    enter(
+      this: WalkerContext,
+      node: Node,
+      parent: Node,
+      ...args: [string, number]
+    ) {
       const { scopeCtx, walkerCtx, isSkip, isRemoved, getNode } =
         getHookContext(this, node, [parent, ...args])
 
@@ -54,7 +59,12 @@ export const walkAST = (
       }
     },
 
-    leave(this: WalkerContext, node, parent, ...args) {
+    leave(
+      this: WalkerContext,
+      node: Node,
+      parent: Node,
+      ...args: [string, number]
+    ) {
       const { scopeCtx, walkerCtx, isSkip, isRemoved, getNode } =
         getHookContext(this, node, [parent, ...args])
 
