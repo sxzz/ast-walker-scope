@@ -4,6 +4,15 @@
   "packageManager": "pnpm@8.6.0",
   "description": "Traverse Babel AST with scope information.",
   "license": "MIT",
+  "homepage": "https://github.com/sxzz/ast-walker-scope#readme",
+  "bugs": {
+    "url": "https://github.com/sxzz/ast-walker-scope/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sxzz/ast-walker-scope.git"
+  },
+  "author": "三咲智子 <sxzz@sxzz.moe>",
   "files": [
     "dist"
   ],
