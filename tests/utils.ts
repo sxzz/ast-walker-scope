@@ -1,6 +1,6 @@
-import type { Node } from '@babel/types'
+import { type Node } from '@babel/types'
+import { type Scope, type ScopeContext } from '../src'
 import type MagicString from 'magic-string'
-import type { Scope, ScopeContext } from '../src'
 
 export function stringifyScope(scope: Scope) {
   return `{\n   | > ${Object.entries(scope)

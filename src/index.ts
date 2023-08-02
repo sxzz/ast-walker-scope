@@ -1,5 +1,5 @@
 import { walk as estreeWalk } from 'estree-walker'
-import { isFunction } from '@babel/types'
+import { type Identifier, type Node, isFunction } from '@babel/types'
 import {
   babelParse,
   isNewScope,
@@ -7,13 +7,12 @@ import {
   walkNewIdentifier,
   walkVariableDeclaration,
 } from './utils/babel'
-import type { Identifier, Node } from '@babel/types'
-import type {
-  ParseOptions,
-  Scope,
-  ScopeContext,
-  WalkerContext,
-  WalkerHooks,
+import {
+  type ParseOptions,
+  type Scope,
+  type ScopeContext,
+  type WalkerContext,
+  type WalkerHooks,
 } from './types'
 
 export * from './types'
@@ -159,7 +158,7 @@ export const walkAST = (
       (node.type === 'BlockStatement' && !isNewScope(parent))
     ) {
       scopeStack.pop()
-      currentScope = scopeStack[scopeStack.length - 1]
+      currentScope = scopeStack.at(-1)!
     }
     walkNewIdentifier(node, registerBinding)
   }

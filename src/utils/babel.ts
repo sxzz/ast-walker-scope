@@ -1,11 +1,10 @@
-import { isFunction } from '@babel/types'
-import { parse } from '@babel/parser'
-import type { ParserPlugin } from '@babel/parser'
-import type {
-  Function,
-  Identifier,
-  Node,
-  VariableDeclaration,
+import { type ParserPlugin, parse } from '@babel/parser'
+import {
+  type Function,
+  type Identifier,
+  type Node,
+  type VariableDeclaration,
+  isFunction,
 } from '@babel/types'
 
 const NEW_SCOPE: Node['type'][] = [

@@ -7,9 +7,8 @@ import {
   isExportNamedDeclaration,
 } from '@babel/types'
 import MagicString from 'magic-string'
-import { babelParse, getRootScope, walk } from '../src'
+import { type WalkerHooks, babelParse, getRootScope, walk } from '../src'
 import { output, prependLineNumber } from './utils'
-import type { WalkerHooks } from '../src'
 
 describe('analyze', () => {
   const fixtures = import.meta.glob('./fixtures/*.{ts,js}', {
