@@ -4,8 +4,8 @@ import {
   type Identifier,
   type Node,
   type VariableDeclaration,
-  isFunction,
 } from '@babel/types'
+import { isFunctionType } from 'ast-kit'
 
 const NEW_SCOPE: Node['type'][] = [
   'CatchClause',
@@ -13,8 +13,8 @@ const NEW_SCOPE: Node['type'][] = [
   'ForOfStatement',
 ]
 
-export const isNewScope = (node: Node) =>
-  NEW_SCOPE.includes(node.type) || isFunction(node)
+export const isNewScope = (node: Node | undefined | null) =>
+  (node && NEW_SCOPE.includes(node.type)) || isFunctionType(node)
 
 export function walkFunctionParams(
   node: Function,

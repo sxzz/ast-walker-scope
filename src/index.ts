@@ -1,5 +1,5 @@
-import { walk as estreeWalk } from 'estree-walker'
-import { type Identifier, type Node, isFunction } from '@babel/types'
+import { walkAST as estreeWalk, isFunctionType } from 'ast-kit'
+import { type Identifier, type Node } from '@babel/types'
 import {
   babelParse,
   isNewScope,
@@ -39,13 +39,8 @@ export const walkAST = (
   const ast: Node = Array.isArray(node)
     ? ({ type: 'Program', body: node } as any)
     : node
-  ;(estreeWalk as any)(ast, {
-    enter(
-      this: WalkerContext,
-      node: Node,
-      parent: Node,
-      ...args: [string, number]
-    ) {
+  estreeWalk(ast, {
+    enter(node, parent, ...args) {
       const { scopeCtx, walkerCtx, isSkip, isRemoved, getNode } =
         getHookContext(this, node, [parent, ...args])
 
@@ -58,12 +53,7 @@ export const walkAST = (
       }
     },
 
-    leave(
-      this: WalkerContext,
-      node: Node,
-      parent: Node,
-      ...args: [string, number]
-    ) {
+    leave(this, node, parent, ...args) {
       const { scopeCtx, walkerCtx, isSkip, isRemoved, getNode } =
         getHookContext(this, node, [parent, ...args])
 
@@ -80,7 +70,11 @@ export const walkAST = (
   function getHookContext(
     ctx: WalkerContext,
     node: Node,
-    [parent, key, index]: [Node, string, number]
+    [parent, key, index]: [
+      Node | undefined | null,
+      string | undefined | null,
+      number | undefined | null,
+    ]
   ): {
     scopeCtx: () => ScopeContext
     walkerCtx: WalkerContext
@@ -123,14 +117,14 @@ export const walkAST = (
     }
   }
 
-  function enterNode(node: Node, parent: Node) {
+  function enterNode(node: Node, parent: Node | undefined | null) {
     if (
       isNewScope(node) ||
       (node.type === 'BlockStatement' && !isNewScope(parent))
     )
       scopeStack.push((currentScope = {}))
 
-    if (isFunction(node)) {
+    if (isFunctionType(node)) {
       walkFunctionParams(node, registerBinding)
     } else if (
       // catch param
@@ -152,7 +146,7 @@ export const walkAST = (
     }
   }
 
-  function leaveNode(node: Node, parent: Node) {
+  function leaveNode(node: Node, parent: Node | undefined | null) {
     if (
       isNewScope(node) ||
       (node.type === 'BlockStatement' && !isNewScope(parent))

@@ -15,9 +15,9 @@ export interface WalkerContext {
 }
 
 export interface ScopeContext {
-  parent: Node
-  key: string
-  index: number
+  parent: Node | undefined | null
+  key: string | undefined | null
+  index: number | undefined | null
 
   scope: Scope
   scopes: Scope[]

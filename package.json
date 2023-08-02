@@ -43,16 +43,16 @@
   },
   "dependencies": {
     "@babel/parser": "^7.22.7",
-    "@babel/types": "^7.22.5"
+    "ast-kit": "^0.9.4"
   },
   "devDependencies": {
+    "@babel/types": "^7.22.5",
     "@sxzz/eslint-config": "^3.3.2",
     "@sxzz/prettier-config": "^1.0.4",
     "@types/node": "^20.4.5",
     "bumpp": "^9.1.1",
     "eslint": "^8.46.0",
     "eslint-define-config": "^1.22.0",
-    "estree-walker": "^3.0.3",
     "fast-glob": "^3.3.1",
     "magic-string": "^0.30.2",
     "prettier": "^3.0.0",
