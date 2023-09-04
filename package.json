@@ -1,7 +1,7 @@
 {
   "name": "ast-walker-scope",
   "version": "0.5.0",
-  "packageManager": "pnpm@8.7.0",
+  "packageManager": "pnpm@8.7.1",
   "description": "Traverse Babel AST with scope information.",
   "license": "MIT",
   "homepage": "https://github.com/sxzz/ast-walker-scope#readme",
@@ -42,22 +42,22 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@babel/parser": "^7.22.11",
-    "ast-kit": "^0.11.0"
+    "@babel/parser": "^7.22.14",
+    "ast-kit": "^0.11.1"
   },
   "devDependencies": {
     "@babel/types": "^7.22.11",
-    "@sxzz/eslint-config": "^3.4.0",
+    "@sxzz/eslint-config": "^3.5.1",
     "@sxzz/prettier-config": "^1.0.4",
-    "@types/node": "^20.5.7",
+    "@types/node": "^20.5.9",
     "bumpp": "^9.2.0",
     "eslint": "^8.48.0",
     "eslint-define-config": "^1.23.0",
     "fast-glob": "^3.3.1",
     "magic-string": "^0.30.3",
-    "prettier": "^3.0.2",
+    "prettier": "^3.0.3",
     "tsup": "^7.2.0",
-    "tsx": "^3.12.7",
+    "tsx": "^3.12.8",
     "typescript": "^5.2.2",
     "vite": "^4.4.9",
     "vitest": "^0.34.3"
