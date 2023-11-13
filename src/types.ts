@@ -1,5 +1,5 @@
-import { type ParserPlugin } from '@babel/parser'
-import { type Node } from '@babel/types'
+import type { ParserPlugin } from '@babel/parser'
+import type { Node } from '@babel/types'
 
 export interface ParseOptions {
   filename?: string

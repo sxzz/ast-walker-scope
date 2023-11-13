@@ -1,5 +1,4 @@
 import { walkAST as estreeWalk, isFunctionType } from 'ast-kit'
-import { type Identifier, type Node } from '@babel/types'
 import {
   babelParse,
   isNewScope,
@@ -7,12 +6,13 @@ import {
   walkNewIdentifier,
   walkVariableDeclaration,
 } from './utils/babel'
-import {
-  type ParseOptions,
-  type Scope,
-  type ScopeContext,
-  type WalkerContext,
-  type WalkerHooks,
+import type { Identifier, Node } from '@babel/types'
+import type {
+  ParseOptions,
+  Scope,
+  ScopeContext,
+  WalkerContext,
+  WalkerHooks,
 } from './types'
 
 export * from './types'

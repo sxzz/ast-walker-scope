@@ -1,11 +1,11 @@
 import { type ParserPlugin, parse } from '@babel/parser'
-import {
-  type Function,
-  type Identifier,
-  type Node,
-  type VariableDeclaration,
-} from '@babel/types'
 import { isFunctionType } from 'ast-kit'
+import type {
+  Function,
+  Identifier,
+  Node,
+  VariableDeclaration,
+} from '@babel/types'
 
 const NEW_SCOPE: Node['type'][] = [
   'CatchClause',
