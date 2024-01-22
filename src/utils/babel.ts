@@ -18,7 +18,7 @@ export const isNewScope = (node: Node | undefined | null) =>
 
 export function walkFunctionParams(
   node: Function,
-  onIdent: (id: Identifier) => void
+  onIdent: (id: Identifier) => void,
 ) {
   for (const p of node.params) {
     for (const id of extractIdentifiers(p)) {
@@ -29,7 +29,7 @@ export function walkFunctionParams(
 
 export function extractIdentifiers(
   param: Node,
-  nodes: Identifier[] = []
+  nodes: Identifier[] = [],
 ): Identifier[] {
   switch (param.type) {
     case 'Identifier':
@@ -76,7 +76,7 @@ export function extractIdentifiers(
 export function babelParse(
   code: string,
   filename?: string,
-  parserPlugins: ParserPlugin[] = []
+  parserPlugins: ParserPlugin[] = [],
 ) {
   const plugins: ParserPlugin[] = parserPlugins || []
   if (filename) {
@@ -93,7 +93,7 @@ export function babelParse(
 
 export function walkVariableDeclaration(
   stmt: VariableDeclaration,
-  register: (id: Identifier) => void
+  register: (id: Identifier) => void,
 ) {
   if (stmt.declare) return
 
@@ -106,7 +106,7 @@ export function walkVariableDeclaration(
 
 export function walkNewIdentifier(
   node: Node,
-  register: (id: Identifier) => void
+  register: (id: Identifier) => void,
 ) {
   if (node.type === 'ExportNamedDeclaration' && node.declaration) {
     node = node.declaration

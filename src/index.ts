@@ -21,7 +21,7 @@ export * from './utils/babel'
 export const walk = (
   code: string,
   walkHooks: WalkerHooks,
-  { filename, parserPlugins }: ParseOptions = {}
+  { filename, parserPlugins }: ParseOptions = {},
 ) => {
   const ast = babelParse(code, filename, parserPlugins)
   walkAST(ast.program, walkHooks)
@@ -31,7 +31,7 @@ export const walk = (
 
 export const walkAST = (
   node: Node | Node[],
-  { enter, leave, enterAfter, leaveAfter }: WalkerHooks
+  { enter, leave, enterAfter, leaveAfter }: WalkerHooks,
 ) => {
   let currentScope: Scope = {}
   const scopeStack: Scope[] = [currentScope]
@@ -74,7 +74,7 @@ export const walkAST = (
       Node | undefined | null,
       string | undefined | null,
       number | undefined | null,
-    ]
+    ],
   ): {
     scopeCtx: () => ScopeContext
     walkerCtx: WalkerContext
@@ -163,7 +163,7 @@ export const walkAST = (
     } else {
       error(
         'registerBinding called without active scope, something is wrong.',
-        id
+        id,
       )
     }
   }

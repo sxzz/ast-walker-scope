@@ -45,7 +45,7 @@ walk(code, {
       console.log(`\nLevel: ${this.level}`)
       for (const [name, node] of Object.entries(this.scope)) {
         console.log(
-          `variable ${name} is located at line ${node.loc?.start.line}, column ${node.loc?.start.column}`
+          `variable ${name} is located at line ${node.loc?.start.line}, column ${node.loc?.start.column}`,
         )
       }
     }
@@ -105,4 +105,4 @@ export interface HookContext extends WalkerContext {
 
 ## License
 
-[MIT](./LICENSE) License © 2022 [三咲智子](https://github.com/sxzz)
+[MIT](./LICENSE) License © 2022-PRESENT [三咲智子](https://github.com/sxzz)

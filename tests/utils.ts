@@ -11,7 +11,7 @@ export function stringifyScope(scope: Scope) {
           node?.loc?.start
             ? `${node?.loc?.start.line}, ${node?.loc?.start.column}`
             : undefined
-        }`
+        }`,
     )
     .join('\n   | > ')}\n   | }`
 }
@@ -27,6 +27,6 @@ export function prependLineNumber(code: string, s: MagicString) {
 export function output(s: MagicString, node: Node, ctx: ScopeContext) {
   s.appendLeft(
     node.end!,
-    `/* LEVEL: ${ctx.scopes.length} \n   | > ${stringifyScope(ctx.scope)} */`
+    `/* LEVEL: ${ctx.scopes.length} \n   | > ${stringifyScope(ctx.scope)} */`,
   )
 }

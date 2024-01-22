@@ -25,7 +25,7 @@ walk(code, {
       console.log(`\nLevel: ${this.level}`)
       for (const [name, node] of Object.entries(this.scope)) {
         console.log(
-          `variable ${name} is located at line ${node.loc?.start.line}, column ${node.loc?.start.column}`
+          `variable ${name} is located at line ${node.loc?.start.line}, column ${node.loc?.start.column}`,
         )
       }
     }

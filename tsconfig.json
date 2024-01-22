@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es2021",
+    "target": "esnext",
     "lib": ["es2019"],
     "module": "esnext",
     "moduleResolution": "bundler",
@@ -9,8 +9,8 @@
     "strict": true,
     "noUnusedLocals": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
   },
   "include": ["src", "tests"],
-  "exclude": ["tests/fixtures"]
+  "exclude": ["tests/fixtures"],
 }
