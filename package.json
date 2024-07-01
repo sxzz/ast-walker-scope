@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "@babel/parser": "^7.24.0",
-    "ast-kit": "^0.12.1"
+    "ast-kit": "^1.0.0"
   },
   "devDependencies": {
     "@babel/types": "^7.24.0",
