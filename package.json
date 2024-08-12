@@ -1,7 +1,7 @@
 {
   "name": "ast-walker-scope",
   "version": "0.6.1",
-  "packageManager": "pnpm@8.15.4",
+  "packageManager": "pnpm@8.15.9",
   "description": "Traverse Babel AST with scope information.",
   "type": "module",
   "license": "MIT",
@@ -39,24 +39,24 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@babel/parser": "^7.24.0",
-    "ast-kit": "^1.0.0"
+    "@babel/parser": "^7.25.3",
+    "ast-kit": "^1.0.1"
   },
   "devDependencies": {
-    "@babel/types": "^7.24.0",
-    "@sxzz/eslint-config": "^3.8.6",
-    "@sxzz/prettier-config": "^2.0.1",
-    "@types/node": "^20.11.28",
-    "bumpp": "^9.4.0",
+    "@babel/types": "^7.25.2",
+    "@sxzz/eslint-config": "^3.17.0",
+    "@sxzz/prettier-config": "^2.0.2",
+    "@types/node": "^20.14.15",
+    "bumpp": "^9.5.1",
     "eslint": "^8.57.0",
     "fast-glob": "^3.3.2",
-    "magic-string": "^0.30.8",
-    "prettier": "^3.2.5",
-    "tsup": "^8.0.2",
-    "tsx": "^4.7.1",
-    "typescript": "^5.4.2",
-    "vite": "^5.1.6",
-    "vitest": "^2.0.3"
+    "magic-string": "^0.30.11",
+    "prettier": "^3.3.3",
+    "tsup": "^8.2.4",
+    "tsx": "^4.17.0",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.0",
+    "vitest": "^2.0.5"
   },
   "engines": {
     "node": ">=16.14.0"
