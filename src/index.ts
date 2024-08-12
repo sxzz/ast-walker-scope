@@ -6,7 +6,6 @@ import {
   walkNewIdentifier,
   walkVariableDeclaration,
 } from './utils/babel'
-import type { Identifier, Node } from '@babel/types'
 import type {
   ParseOptions,
   Scope,
@@ -14,6 +13,7 @@ import type {
   WalkerContext,
   WalkerHooks,
 } from './types'
+import type { Identifier, Node } from '@babel/types'
 
 export * from './types'
 export * from './utils/babel'

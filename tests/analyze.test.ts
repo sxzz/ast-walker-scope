@@ -1,13 +1,13 @@
 /// <reference types="vite/client" />
 
-import { describe, expect, test } from 'vitest'
 import {
   isCallExpression,
   isDeclaration,
   isExportNamedDeclaration,
 } from '@babel/types'
 import MagicString from 'magic-string'
-import { type WalkerHooks, babelParse, getRootScope, walk } from '../src'
+import { describe, expect, test } from 'vitest'
+import { babelParse, getRootScope, walk, type WalkerHooks } from '../src'
 import { output, prependLineNumber } from './utils'
 
 describe('analyze', () => {

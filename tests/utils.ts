@@ -1,5 +1,5 @@
-import type { Node } from '@babel/types'
 import type { Scope, ScopeContext } from '../src'
+import type { Node } from '@babel/types'
 import type MagicString from 'magic-string'
 
 export function stringifyScope(scope: Scope) {

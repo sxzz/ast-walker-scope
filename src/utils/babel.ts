@@ -1,4 +1,4 @@
-import { type ParserPlugin, parse } from '@babel/parser'
+import { parse, type ParserPlugin } from '@babel/parser'
 import { isFunctionType } from 'ast-kit'
 import type {
   Function,
