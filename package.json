@@ -1,6 +1,6 @@
 {
   "name": "ast-walker-scope",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "packageManager": "pnpm@9.7.0",
   "description": "Traverse Babel AST with scope information.",
   "type": "module",
