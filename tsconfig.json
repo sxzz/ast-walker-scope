@@ -2,13 +2,17 @@
   "compilerOptions": {
     "target": "esnext",
     "lib": ["es2019"],
-    "module": "esnext",
+    "moduleDetection": "force",
+    "module": "preserve",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "types": ["node"],
     "strict": true,
     "noUnusedLocals": true,
+    "declaration": true,
     "esModuleInterop": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
     "skipLibCheck": true
   },
   "include": ["src", "tests"],
