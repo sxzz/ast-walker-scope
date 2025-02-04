@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "@babel/types": "^7.25.6",
-    "@sxzz/eslint-config": "^4.2.0",
+    "@sxzz/eslint-config": "^5.0.1",
     "@sxzz/prettier-config": "^2.0.2",
     "@types/node": "^22.7.2",
     "bumpp": "^9.5.2",
