@@ -48,7 +48,7 @@
     "@sxzz/eslint-config": "^4.2.0",
     "@sxzz/prettier-config": "^2.0.2",
     "@types/node": "^22.7.2",
-    "bumpp": "^9.5.2",
+    "bumpp": "^10.0.2",
     "eslint": "^9.11.1",
     "fast-glob": "^3.3.2",
     "magic-string": "^0.30.11",
