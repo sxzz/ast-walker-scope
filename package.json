@@ -33,7 +33,7 @@
   "scripts": {
     "lint": "eslint .",
     "lint:fix": "pnpm run lint --fix",
-    "build": "tsup",
+    "build": "tsdown",
     "test": "vitest",
     "typecheck": "tsc --noEmit",
     "release": "bumpp && pnpm publish",
@@ -51,15 +51,16 @@
     "bumpp": "^10.0.3",
     "eslint": "^9.20.1",
     "magic-string": "^0.30.17",
+    "oxc-transform": "^0.51.0",
     "prettier": "^3.5.1",
-    "tsup": "^8.3.6",
+    "tsdown": "^0.5.9",
     "tsx": "^4.19.2",
     "typescript": "^5.7.3",
     "vite": "^6.1.0",
     "vitest": "^3.0.5"
   },
   "engines": {
-    "node": ">=16.14.0"
+    "node": ">=18.12.0"
   },
   "prettier": "@sxzz/prettier-config"
 }
