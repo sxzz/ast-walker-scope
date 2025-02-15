@@ -1,6 +1,7 @@
-import { parse, type ParserPlugin } from '@babel/parser'
+import { parse, type ParseResult, type ParserPlugin } from '@babel/parser'
 import { isFunctionType } from 'ast-kit'
 import type {
+  File,
   Function,
   Identifier,
   Node,
@@ -13,13 +14,13 @@ const NEW_SCOPE: Node['type'][] = [
   'ForOfStatement',
 ]
 
-export const isNewScope = (node: Node | undefined | null) =>
+export const isNewScope = (node: Node | undefined | null): boolean =>
   (node && NEW_SCOPE.includes(node.type)) || isFunctionType(node)
 
 export function walkFunctionParams(
   node: Function,
   onIdent: (id: Identifier) => void,
-) {
+): void {
   for (const p of node.params) {
     for (const id of extractIdentifiers(p)) {
       onIdent(id)
@@ -77,7 +78,7 @@ export function babelParse(
   code: string,
   filename?: string,
   parserPlugins: ParserPlugin[] = [],
-) {
+): ParseResult<File> {
   const plugins: ParserPlugin[] = parserPlugins || []
   if (filename) {
     if (/\.tsx?$/.test(filename)) plugins.push('typescript')
@@ -94,7 +95,7 @@ export function babelParse(
 export function walkVariableDeclaration(
   stmt: VariableDeclaration,
   register: (id: Identifier) => void,
-) {
+): void {
   if (stmt.declare) return
 
   for (const decl of stmt.declarations) {
@@ -107,7 +108,7 @@ export function walkVariableDeclaration(
 export function walkNewIdentifier(
   node: Node,
   register: (id: Identifier) => void,
-) {
+): void {
   if (node.type === 'ExportNamedDeclaration' && node.declaration) {
     node = node.declaration
   }

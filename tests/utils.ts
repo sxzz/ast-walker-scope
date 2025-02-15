@@ -16,7 +16,7 @@ export function stringifyScope(scope: Scope) {
     .join('\n   | > ')}\n   | }`
 }
 
-export function prependLineNumber(code: string, s: MagicString) {
+export function prependLineNumber(code: string, s: MagicString): void {
   let idx = 0
   for (const [lineNumber, line] of code.split('\n').entries()) {
     s.prependLeft(idx, `${String(lineNumber + 1).padStart(2)} | `)
@@ -24,7 +24,7 @@ export function prependLineNumber(code: string, s: MagicString) {
   }
 }
 
-export function output(s: MagicString, node: Node, ctx: ScopeContext) {
+export function output(s: MagicString, node: Node, ctx: ScopeContext): void {
   s.appendLeft(
     node.end!,
     `/* LEVEL: ${ctx.scopes.length} \n   | > ${stringifyScope(ctx.scope)} */`,

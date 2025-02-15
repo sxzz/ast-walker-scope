@@ -13,26 +13,27 @@ import type {
   WalkerContext,
   WalkerHooks,
 } from './types'
-import type { Identifier, Node } from '@babel/types'
+import type { ParseResult } from '@babel/parser'
+import type { File, Identifier, Node } from '@babel/types'
 
 export * from './types'
 export * from './utils/babel'
 
-export const walk = (
+export function walk(
   code: string,
   walkHooks: WalkerHooks,
   { filename, parserPlugins }: ParseOptions = {},
-) => {
+): ParseResult<File> {
   const ast = babelParse(code, filename, parserPlugins)
   walkAST(ast.program, walkHooks)
 
   return ast
 }
 
-export const walkAST = (
+export function walkAST(
   node: Node | Node[],
   { enter, leave, enterAfter, leaveAfter }: WalkerHooks,
-) => {
+): void {
   let currentScope: Scope = {}
   const scopeStack: Scope[] = [currentScope]
 
@@ -175,7 +176,7 @@ export const walkAST = (
   }
 }
 
-export const getRootScope = (nodes: Node[]): Scope => {
+export function getRootScope(nodes: Node[]): Scope {
   const scope: Scope = {}
   for (const node of nodes) {
     walkNewIdentifier(node, (id) => {
