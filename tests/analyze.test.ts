@@ -11,9 +11,10 @@ import { babelParse, getRootScope, walk, type WalkerHooks } from '../src'
 import { output, prependLineNumber } from './utils'
 
 describe('analyze', () => {
-  const fixtures = import.meta.glob('./fixtures/*.{ts,js}', {
+  const fixtures = import.meta.glob<string>('./fixtures/*.{ts,js}', {
     eager: true,
-    as: 'raw',
+    query: '?raw',
+    import: 'default',
   })
 
   for (const [filename, content] of Object.entries(fixtures)) {
