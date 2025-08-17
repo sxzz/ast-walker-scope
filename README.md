@@ -1,6 +1,8 @@
-# ast-walker-scope [![npm](https://img.shields.io/npm/v/ast-walker-scope.svg)](https://npmjs.com/package/ast-walker-scope)
+# ast-walker-scope
 
-[![Unit Test](https://github.com/sxzz/ast-walker-scope/actions/workflows/unit-test.yml/badge.svg)](https://github.com/sxzz/ast-walker-scope/actions/workflows/unit-test.yml)
+[![npm version][npm-version-src]][npm-version-href]
+[![npm downloads][npm-downloads-src]][npm-downloads-href]
+[![Unit Test][unit-test-src]][unit-test-href]
 
 Traverse Babel AST with scope information.
 
@@ -106,3 +108,12 @@ export interface HookContext extends WalkerContext {
 ## License
 
 [MIT](./LICENSE) License © 2022-PRESENT [三咲智子](https://github.com/sxzz)
+
+<!-- Badges -->
+
+[npm-version-src]: https://img.shields.io/npm/v/ast-walker-scope.svg
+[npm-version-href]: https://npmjs.com/package/ast-walker-scope
+[npm-downloads-src]: https://img.shields.io/npm/dm/ast-walker-scope
+[npm-downloads-href]: https://www.npmcharts.com/compare/ast-walker-scope?interval=30
+[unit-test-src]: https://github.com/sxzz/ast-walker-scope/actions/workflows/unit-test.yml/badge.svg
+[unit-test-href]: https://github.com/sxzz/ast-walker-scope/actions/workflows/unit-test.yml
