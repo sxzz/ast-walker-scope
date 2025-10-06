@@ -4,7 +4,7 @@ import type MagicString from 'magic-string'
 
 export function stringifyScope(scope: Scope) {
   return `{\n   | > ${Object.entries(scope)
-    .sort(([a], [b]) => a.localeCompare(b))
+    .toSorted(([a], [b]) => a.localeCompare(b))
     .map(
       ([key, node]) =>
         `${key}: ${

@@ -8,14 +8,14 @@ import type {
   VariableDeclaration,
 } from '@babel/types'
 
-const NEW_SCOPE: Node['type'][] = [
+const NEW_SCOPE: Set<Node['type']> = new Set([
   'CatchClause',
   'ForInStatement',
   'ForOfStatement',
-]
+])
 
 export const isNewScope = (node: Node | undefined | null): boolean =>
-  (node && NEW_SCOPE.includes(node.type)) || isFunctionType(node)
+  (node && NEW_SCOPE.has(node.type)) || isFunctionType(node)
 
 export function walkFunctionParams(
   node: Function,
