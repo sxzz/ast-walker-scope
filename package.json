@@ -16,11 +16,9 @@
     "url": "https://github.com/sxzz/ast-walker-scope/issues"
   },
   "exports": {
-    ".": "./dist/index.js",
+    ".": "./dist/index.mjs",
     "./package.json": "./package.json"
   },
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
     "dist"
@@ -44,6 +42,9 @@
     "@babel/parser": "^7.29.2",
     "ast-kit": "^2.2.0"
   },
+  "inlinedDependencies": {
+    "@babel/types": "7.29.0"
+  },
   "devDependencies": {
     "@babel/types": "^7.29.0",
     "@sxzz/eslint-config": "^7.8.4",
@@ -54,13 +55,11 @@
     "magic-string": "^0.30.21",
     "prettier": "^3.8.2",
     "tsdown": "^0.21.7",
+    "tsdown-preset-sxzz": "^0.5.0",
     "tsx": "^4.21.0",
     "typescript": "^6.0.2",
     "vite": "^8.0.8",
     "vitest": "^4.1.4"
   },
-  "prettier": "@sxzz/prettier-config",
-  "tsdown": {
-    "exports": true
-  }
+  "prettier": "@sxzz/prettier-config"
 }
