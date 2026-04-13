@@ -11,13 +11,13 @@ importers:
       '@babel/parser':
         specifier: ^7.29.2
         version: 7.29.2
+      '@babel/types':
+        specifier: ^7.29.0
+        version: 7.29.0
       ast-kit:
         specifier: ^2.2.0
         version: 2.2.0
     devDependencies:
-      '@babel/types':
-        specifier: ^7.29.0
-        version: 7.29.0
       '@sxzz/eslint-config':
         specifier: ^7.8.4
         version: 7.8.4(@types/eslint@9.6.1)(@typescript-eslint/eslint-plugin@8.58.1(@typescript-eslint/parser@8.58.1(eslint@10.2.0(jiti@2.6.1))(typescript@6.0.2))(eslint@10.2.0(jiti@2.6.1))(typescript@6.0.2))(@typescript-eslint/parser@8.58.1(eslint@10.2.0(jiti@2.6.1))(typescript@6.0.2))(@typescript-eslint/rule-tester@8.58.1(eslint@10.2.0(jiti@2.6.1))(typescript@6.0.2))(@typescript-eslint/typescript-estree@8.58.1(typescript@6.0.2))(@typescript-eslint/utils@8.58.1(eslint@10.2.0(jiti@2.6.1))(typescript@6.0.2))(eslint@10.2.0(jiti@2.6.1))(prettier@3.8.2)(typescript@6.0.2)
