@@ -1,32 +1,35 @@
 {
   "name": "ast-walker-scope",
+  "type": "module",
   "version": "0.8.3",
   "packageManager": "pnpm@10.33.0",
   "description": "Traverse Babel AST with scope information.",
-  "type": "module",
+  "author": "Kevin Deng <sxzz@sxzz.moe>",
   "license": "MIT",
+  "funding": "https://github.com/sponsors/sxzz",
   "homepage": "https://github.com/sxzz/ast-walker-scope#readme",
-  "bugs": {
-    "url": "https://github.com/sxzz/ast-walker-scope/issues"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sxzz/ast-walker-scope.git"
   },
-  "author": "Kevin Deng <sxzz@sxzz.moe>",
-  "funding": "https://github.com/sponsors/sxzz",
-  "files": [
-    "dist"
-  ],
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "bugs": {
+    "url": "https://github.com/sxzz/ast-walker-scope/issues"
+  },
   "exports": {
     ".": "./dist/index.js",
     "./package.json": "./package.json"
   },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "publishConfig": {
     "access": "public"
+  },
+  "engines": {
+    "node": ">=20.19.0"
   },
   "scripts": {
     "lint": "eslint .",
@@ -55,9 +58,6 @@
     "typescript": "^6.0.2",
     "vite": "^8.0.8",
     "vitest": "^4.1.4"
-  },
-  "engines": {
-    "node": ">=20.19.0"
   },
   "prettier": "@sxzz/prettier-config",
   "tsdown": {
