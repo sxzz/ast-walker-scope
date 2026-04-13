@@ -34,7 +34,7 @@ export function walkAST(
   node: Node | Node[],
   { enter, leave, enterAfter, leaveAfter }: WalkerHooks,
 ): void {
-  let currentScope: Scope = {}
+  let currentScope: Scope = Object.create(null)
   const scopeStack: Scope[] = [currentScope]
 
   const ast: Node = Array.isArray(node)
@@ -88,7 +88,10 @@ export function walkAST(
       key,
       index,
 
-      scope: scopeStack.reduce((prev, curr) => ({ ...prev, ...curr }), {}),
+      scope: scopeStack.reduce(
+        (prev, curr) => Object.assign(prev, curr),
+        Object.create(null),
+      ),
       scopes: scopeStack,
       level: scopeStack.length,
     })
@@ -123,7 +126,7 @@ export function walkAST(
       isNewScope(node) ||
       (node.type === 'BlockStatement' && !isNewScope(parent))
     )
-      scopeStack.push((currentScope = {}))
+      scopeStack.push((currentScope = Object.create(null)))
 
     if (isFunctionType(node)) {
       walkFunctionParams(node, registerBinding)
@@ -177,7 +180,7 @@ export function walkAST(
 }
 
 export function getRootScope(nodes: Node[]): Scope {
-  const scope: Scope = {}
+  const scope: Scope = Object.create(null)
   for (const node of nodes) {
     walkNewIdentifier(node, (id) => {
       scope[id.name] = id
