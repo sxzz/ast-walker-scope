@@ -16,7 +16,7 @@
     "url": "https://github.com/sxzz/ast-walker-scope/issues"
   },
   "exports": {
-    ".": "./dist/index.mjs",
+    ".": "./dist/index.js",
     "./package.json": "./package.json"
   },
   "files": [
