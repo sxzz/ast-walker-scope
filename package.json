@@ -49,7 +49,7 @@
     "@typescript/native-preview": "7.0.0-dev.20260616.1",
     "bumpp": "^11.1.0",
     "eslint": "^10.5.0",
-    "magic-string": "^0.30.21",
+    "magic-string": "^1.0.0",
     "prettier": "^3.8.4",
     "tsdown": "^0.22.2",
     "tsdown-preset-sxzz": "^0.6.0",
