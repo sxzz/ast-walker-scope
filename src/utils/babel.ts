@@ -57,9 +57,9 @@ export function extractIdentifiers(
       break
 
     case 'ArrayPattern':
-      param.elements.forEach((element) => {
+      for (const element of param.elements) {
         if (element) extractIdentifiers(element, nodes)
-      })
+      }
       break
 
     case 'RestElement':

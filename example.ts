@@ -21,13 +21,15 @@ console.log(a)
 
 walk(code, {
   leave(this, node) {
-    if (node.type === 'CallExpression') {
-      console.log(`\nLevel: ${this.level}`)
-      for (const [name, node] of Object.entries(this.scope)) {
-        console.log(
-          `variable ${name} is located at line ${node.loc?.start.line}, column ${node.loc?.start.column}`,
-        )
-      }
+    if (node.type !== 'CallExpression') {
+      return
+    }
+
+    console.log(`\nLevel: ${this.level}`)
+    for (const [name, node] of Object.entries(this.scope)) {
+      console.log(
+        `variable ${name} is located at line ${node.loc?.start.line}, column ${node.loc?.start.column}`,
+      )
     }
   },
 })
