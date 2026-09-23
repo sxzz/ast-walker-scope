@@ -2,7 +2,7 @@
   "name": "ast-walker-scope",
   "type": "module",
   "version": "0.10.0",
-  "packageManager": "pnpm@11.15.1",
+  "packageManager": "pnpm@12.6.0",
   "description": "Traverse Babel AST with scope information.",
   "author": "Kevin Deng <sxzz@sxzz.moe>",
   "license": "MIT",
